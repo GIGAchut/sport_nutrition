@@ -1,77 +1,108 @@
-import { products } from './data/products.js';
+import { getQuantity, setQuantity, updateHeaderCartCount } from './cart.js'
 
-const cartState = new Map();
+async function loadProducts() {
+    const response = await fetch('/api/products')
 
-export function renderCatalog(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!response.ok) {
+        throw new Error('Не удалось загрузить товары')
+    }
 
-    container.innerHTML = '';
-
-    products.forEach(product => {
-        const currentQty = cartState.get(product.id) || 0;
-        
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerText='[ИЗОБРАЖЕНИЕ НЕ НАЙДЕНО]';">
-            </div>
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-description">${product.description}</p>
-            <div class="product-footer">
-                <span class="product-price">${product.price} ₽</span>
-                
-                <div class="quantity-control" data-id="${product.id}">
-                    <button class="qty-btn minus" ${currentQty === 0 ? 'disabled' : ''}>−</button>
-                    <span class="qty-value">${currentQty}</span>
-                    <button class="qty-btn plus">+</button>
-                </div>
-            </div>
-        `;
-        container.appendChild(card);
-    });
+    return await response.json()
 }
 
-function updateHeaderCartCount() {
-    const totalItems = Array.from(cartState.values()).reduce((sum, qty) => sum + qty, 0);
-    const cartCountElement = document.getElementById('cart-count');
-    if (cartCountElement) {
-        cartCountElement.textContent = totalItems;
+function showQuantity(control, quantity) {
+    const value = control.querySelector('.qty-value')
+    const minusButton = control.querySelector('.minus')
+
+    value.textContent = quantity
+    minusButton.disabled = quantity === 0
+    if (quantity === 0) {
+        value.classList.remove('active')
+    } else {
+        value.classList.add('active')
     }
 }
 
-function updateCardUI(productId) {
-    const control = document.querySelector(`.quantity-control[data-id="${productId}"]`);
-    if (!control) return;
+function createProductCard(product) {
+    const card = document.createElement('div')
+    card.className = 'product-card'
+    card.innerHTML = `
+        <div class="product-image">
+            <img>
+        </div>
+        <h3 class="product-name"></h3>
+        <p class="product-description"></p>
+        <div class="product-footer">
+            <span class="product-price"></span>
+            <div class="quantity-control">
+                <button class="qty-btn minus">−</button>
+                <span class="qty-value"></span>
+                <button class="qty-btn plus">+</button>
+            </div>
+        </div>
+    `
 
-    const qty = cartState.get(productId) || 0;
-    const qtyValue = control.querySelector('.qty-value');
-    const minusBtn = control.querySelector('.minus');
+    const image = card.querySelector('img')
+    image.src = product.image
+    image.alt = product.name
+    image.addEventListener('error', () => {
+        image.parentElement.textContent = '[ИЗОБРАЖЕНИЕ НЕ НАЙДЕНО]'
+    })
 
-    qtyValue.textContent = qty;
-    minusBtn.disabled = qty === 0;
-    
-    qty === 0 ? qtyValue.style.color = '#a0a0a0' : qtyValue.style.color = '#ffffff'
-    
+    card.querySelector('.product-name').textContent = product.name
+    card.querySelector('.product-description').textContent = product.description
+    card.querySelector('.product-price').textContent = product.price + '₽'
+
+    const control = card.querySelector('.quantity-control')
+    control.dataset.id = product.id
+    showQuantity(control, getQuantity(product.id))
+
+    return card
+}
+
+export async function renderCatalog(containerId) {
+    const container = document.getElementById(containerId)
+    if (!container) {
+        return
+    }
+
+    try {
+        const products = await loadProducts()
+
+        container.innerHTML = ''
+        for (const product of products) {
+            container.appendChild(createProductCard(product))
+        }
+    } catch (error) {
+        container.textContent = 'Ошибка зарузки каталога. Попробуйте позже.'
+        console.error(error)
+    }
 }
 
 export function initCartLogic() {
-    document.addEventListener('click', (event) => {
-        const btn = event.target;
-        if (!btn.classList.contains('qty-btn')) return;
+    const grid = document.getElementById('product-grid')
+    if (!grid) {
+        return
+    }
 
-        const control = btn.closest('.quantity-control');
-        const productId = parseInt(control.dataset.id, 10);
-        const currentQty = cartState.get(productId) || 0;
-
-        if (btn.classList.contains('plus')) {
-            cartState.set(productId, currentQty + 1);
-        } else if (btn.classList.contains('minus') && currentQty > 0) {
-            cartState.set(productId, currentQty - 1);
+    grid.addEventListener('click', (event) => {
+        const button = event.target.closest('.qty-btn')
+        if (!button) {
+            return
         }
 
-        updateCardUI(productId);
-        updateHeaderCartCount();
+        const control = button.closest('.quantity-control')
+        const productId = Number(control.dataset.id)
+        let quantity = getQuantity(productId)
+
+        if (button.classList.contains('plus')) {
+            quantity = quantity + 1
+        } else {
+            quantity = quantity - 1
+        }
+
+        setQuantity(productId, quantity)
+        showQuantity(control, getQuantity(productId))
+        updateHeaderCartCount()
     });
 }

@@ -1,6 +1,6 @@
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 4fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
 }
 
@@ -49,18 +49,19 @@
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.9rem;
+    overflow: hidden;
 }
 
 .product-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
     transition: all 0.4s ease;
 }
 
 .product-card:hover .product-image img {
-    filter: grayscale(0%) contrast(1.1);
+    filter: contrast(1.1);
     transform: scale(1.05);
 }
 
@@ -147,3 +148,6 @@
     font-family: 'Courier New', monospace;
 }
 
+.qty-value.active {
+    color: #ffffff;
+}

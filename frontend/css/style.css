@@ -65,7 +65,7 @@ body {
     margin: 0 auto;
 }
 
-.hero {
+.desc {
     text-align: center;
     padding: 80px 20px;
     border: 1px solid var(--border-color);
@@ -73,7 +73,7 @@ body {
     background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
 }
 
-.hero h1 {
+.desc h1 {
     font-size: 3.5rem;
     margin-bottom: 20px;
     text-transform: uppercase;
