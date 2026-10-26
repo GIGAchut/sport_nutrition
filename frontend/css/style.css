@@ -1,3 +1,7 @@
+html {
+    zoom: 0.75;
+}
+
 :root {
     --bg-color: #0a0a0a;
     --text-color: #e0e0e0;
@@ -19,6 +23,7 @@ body {
     background-size: 40px 40px;
     color: var(--text-color);
     line-height: 1.6;
+    
 }
 
 .header {
@@ -34,7 +39,7 @@ body {
     font-size: 2.5rem;
     font-weight: 900;
     letter-spacing: 3px;
-    background: linear-gradient(180deg, #fff 0%, #aaa 50%, #555 100%);
+    background: linear-gradient( #fff 0%, #aaa 50%, #555 );
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
@@ -65,7 +70,7 @@ body {
     margin: 0 auto;
 }
 
-.hero {
+.desc {
     text-align: center;
     padding: 80px 20px;
     border: 1px solid var(--border-color);
@@ -73,7 +78,7 @@ body {
     background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
 }
 
-.hero h1 {
+.desc h1 {
     font-size: 3.5rem;
     margin-bottom: 20px;
     text-transform: uppercase;
