@@ -1,4 +1,4 @@
-import { getQuantity, setQuantity, updateHeaderCartCount } from './cart.js'
+import { getQuantity, setQuantity, updateHeaderCartCount } from './cart.js';
 
 async function loadProducts() {
     const response = await fetch('/api/products')
@@ -100,7 +100,6 @@ export function initCartLogic() {
         } else {
             quantity = quantity - 1
         }
-
         setQuantity(productId, quantity)
         showQuantity(control, getQuantity(productId))
         updateHeaderCartCount()

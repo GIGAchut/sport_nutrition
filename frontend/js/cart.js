@@ -25,7 +25,6 @@ export function setQuantity(productId, quantity) {
     } else {
         cart[productId] = quantity;
     }
-
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
