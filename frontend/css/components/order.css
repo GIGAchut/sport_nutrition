@@ -1,0 +1,87 @@
+.order-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 130px 120px;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background: #111;
+    border: 1px solid var(--border-color);
+}
+
+.order-name {
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--chrome-light);
+}
+
+.order-price {
+    color: var(--chrome-mid);
+}
+
+.order-sum {
+    text-align: right;
+    font-weight: bold;
+    color: var(--chrome-light);
+}
+
+.order-total {
+    text-align: right;
+    font-size: 1.5rem;
+    margin: 20px 0 40px;
+    color: var(--chrome-light);
+}
+
+.order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+}
+
+.order-form label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: var(--chrome-mid);
+}
+
+.order-form input {
+    padding: 12px;
+    background: #111;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    font-family: 'Arial', sans-serif;
+}
+
+.order-form input:focus {
+    outline: none;
+    border-color: var(--chrome-light);
+}
+
+.order-button {
+    margin-top: 10px;
+    padding: 14px;
+    background: var(--chrome-light);
+    color: #000;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.order-button:hover {
+    background: var(--chrome-mid);
+}
+
+.order-info {
+    font-size: 1.1rem;
+    color: var(--chrome-mid);
+}
+
+.order-link {
+    color: var(--chrome-light);
+}

@@ -8,40 +8,44 @@ export function getCart() {
         }
         return JSON.parse(saved)
     } catch (error) {
-        return {};
+        return {}
     }
 }
 
 export function getQuantity(productId) {
-    const cart = getCart();
-    return cart[productId] || 0;
+    const cart = getCart()
+    return cart[productId] || 0
 }
 
 export function setQuantity(productId, quantity) {
-    const cart = getCart();
+    const cart = getCart()
 
     if (quantity <= 0) {
-        delete cart[productId];
+        delete cart[productId]
     } else {
-        cart[productId] = quantity;
+        cart[productId] = quantity
     }
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem(CART_KEY, JSON.stringify(cart))
 }
 
 export function getTotalCount() {
-    const cart = getCart();
-    let total = 0;
+    const cart = getCart()
+    let total = 0
 
     for (const productId in cart) {
-        total += cart[productId];
+        total += cart[productId]
     }
 
-    return total;
+    return total
 }
 
 export function updateHeaderCartCount() {
-    const element = document.getElementById('cart-count');
+    const element = document.getElementById('cart-count')
     if (element) {
-        element.textContent = getTotalCount();
+        element.textContent = getTotalCount()
     }
+}
+
+export function clearCart() {
+    localStorage.removeItem(CART_KEY)
 }

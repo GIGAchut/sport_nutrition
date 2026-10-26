@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKSENOV | Оформление заказа</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components/catalog.css">
+    <link rel="stylesheet" href="css/components/order.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">AKSENOV</div>
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Каталог</a>
+            <a href="cart.html" class="nav-link active">Корзина (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h2 class="section-title">ОФОРМЛЕНИЕ ЗАКАЗА</h2>
+
+        <p id="order-empty" class="order-info" hidden>
+            Корзина пуста. <a href="index.html" class="order-link">Перейти в каталог</a>
+        </p>
+
+        <div id="order-body" hidden>
+            <div id="order-items"></div>
+            <p class="order-total">Итого: <span id="order-total">0</span> ₽</p>
+
+            <form id="order-form" class="order-form">
+                <label for="customer-name">Имя</label>
+                <input id="customer-name" type="text" required minlength="2" maxlength="100">
+d
+                <label for="phone">Телефон</label>
+                <input id="phone" type="tel" required maxlength="14" placeholder="7 XXX XXX XXXX"
+                    pattern="7 \d{3} \d{3} \d{4}" title="Формат: 7 XXX XXX XXXX">
+
+                <label for="address">Адрес доставки</label>
+                <input id="address" type="text" required minlength="5" maxlength="300">
+
+                <button type="submit" class="order-button">Оформить заказ</button>
+            </form>
+        </div>
+
+        <div id="order-success" class="order-info" hidden>
+            <p id="order-success-text"></p>
+            <a href="index.html" class="order-link">Вернуться в каталог</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 AKSENOV. Все права защищены.</p>
+    </footer>
+
+    <script type="module" src="js/order.js"></script>
+</body>
+</html>
