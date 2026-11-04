@@ -24,6 +24,18 @@ def add_start_products(connection):
         ("BCAA RECOVERY",
          "Аминокислоты с разветвленной цепью для быстрого восстановления мышц после нагрузок.",
          2200, "assets/images/bcaa.png"),
+        ("WHEY PROTEIN CHROME",
+         "Сывороточный протеин высшего качества. 25г белка на порцию для максимального роста.",
+         3500, "assets/images/protein.png"),
+        ("CREATINE MONOHYDRATE",
+         "Чистый креатин для взрывной силы и выносливости. Микронизированная формула.",
+         1800, "assets/images/creatine.png"),
+        ("PRE-WORKOUT TITAN",
+         "Мощный предтренировочный комплекс для максимального фокуса и энергии.",
+         2900, "assets/images/preworkout.png"),
+        ("BCAA RECOVERY",
+         "Аминокислоты с разветвленной цепью для быстрого восстановления мышц после нагрузок.",
+         2200, "assets/images/bcaa.png"),
     ]
     connection.executemany(
         "INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)",
