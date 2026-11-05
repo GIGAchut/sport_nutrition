@@ -1,12 +1,16 @@
 .order-row {
     display: grid;
-    grid-template-columns: 1fr 120px auto 120px;
+    grid-template-columns: 1fr 120px 130px 120px;
     align-items: center;
     gap: 20px;
     padding: 15px 20px;
     margin-bottom: 10px;
     background: #111;
     border: 1px solid var(--border-color);
+}
+
+.order-row .quantity-control {
+    justify-self: start;
 }
 
 .order-name {
@@ -33,10 +37,21 @@
 }
 
 .order-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.order-column {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 500px;
+}
+
+.order-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 .order-form label {
@@ -59,8 +74,11 @@
     border-color: var(--chrome-light);
 }
 
+.order-form .order-button {
+    grid-column: 1 / -1;
+}
+
 .order-button {
-    margin-top: 10px;
     padding: 14px;
     background: var(--chrome-light);
     color: #000;
@@ -70,12 +88,8 @@
     font-weight: 900;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
-.order-button:hover {
-    background: var(--chrome-mid);
-}
 
 .order-info {
     font-size: 1.1rem;

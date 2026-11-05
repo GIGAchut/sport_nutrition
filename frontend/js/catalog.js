@@ -1,6 +1,6 @@
 import { getQuantity, setQuantity, updateHeaderCartCount } from './cart.js'
 
-async function loadProducts() {
+export async function loadProducts() {
     const response = await fetch('/api/products')
 
     if (!response.ok) {

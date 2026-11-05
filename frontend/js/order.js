@@ -1,22 +1,15 @@
-import { getCart, getQuantity, setQuantity, updateHeaderCartCount, clearCart } from './cart.js'
+import { getCart, getQuantity, setQuantity, clearCart, updateHeaderCartCount } from './cart.js'
+import { loadProducts } from './catalog.js'
 
 let products = []
-
-async function loadProducts() {
-    const response = await fetch('/api/products')
-
-    if (!response.ok) {
-        throw new Error('Не удалось загрузить товары')
-    }
-
-    return await response.json()
-}
 
 function removeUnknownProducts() {
     const cart = getCart()
 
     for (const productId in cart) {
-        const exists = products.some((product) => product.id === Number(productId))
+        const exists = products.some(function(product) {
+            return product.id === Number(productId)
+        })
         if (!exists) {
             setQuantity(productId, 0)
         }
@@ -50,6 +43,7 @@ function getTotal(lines) {
 function createOrderRow(product, quantity) {
     const row = document.createElement('div')
     row.className = 'order-row'
+
     row.innerHTML = `
         <span class="order-name"></span>
         <span class="order-price"></span>
@@ -120,6 +114,7 @@ function showSuccess(customerName, total) {
     document.getElementById('order-success').hidden = false
 }
 
+
 function formatPhone(value) {
     let digits = value.replace(/\D/g, '')
 
@@ -143,6 +138,39 @@ function formatPhone(value) {
     return parts.filter((part) => part !== '').join(' ')
 }
 
+function formatCardNumber(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 16)
+    const groups = []
+
+    for (let i = 0; i < digits.length; i += 4) {
+        groups.push(digits.slice(i, i + 4))
+    }
+
+    return groups.join(' ')
+}
+
+function formatExpiry(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 4)
+
+    if (digits.length <= 2) {
+        return digits
+    }
+
+    return digits.slice(0, 2) + '/' + digits.slice(2)
+}
+
+function formatCvc(value) {
+    return value.replace(/\D/g, '').slice(0, 3)
+}
+
+function bindFormat(inputId, formatFunction) {
+    const input = document.getElementById(inputId)
+
+    input.addEventListener('input', () => {
+        input.value = formatFunction(input.value)
+    })
+}
+
 function sendOrder(event) {
     event.preventDefault()
 
@@ -159,8 +187,6 @@ function sendOrder(event) {
         address: document.getElementById('address').value.trim(),
         items: items,
     }
-
-    console.log('Заказ сформирован:', order)
 
     const total = getTotal(lines)
 
@@ -185,6 +211,13 @@ async function initOrderPage() {
     renderOrder()
     initQuantityButtons()
     document.getElementById('order-form').addEventListener('submit', sendOrder)
+
+    bindFormat('phone', formatPhone)
+    bindFormat('card-number', formatCardNumber)
+    bindFormat('card-expiry', formatExpiry)
+    bindFormat('card-cvc', formatCvc)
 }
 
-initOrderPage()
+document.addEventListener('DOMContentLoaded', () => {
+    initOrderPage()
+})
