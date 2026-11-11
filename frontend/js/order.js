@@ -49,7 +49,7 @@ function createOrderRow(product, quantity) {
         <span class="order-price"></span>
         <div class="quantity-control">
             <button class="qty-btn minus">−</button>
-            <span class="qty-value active"></span>
+            <input class="qty-value active" type="number" min="0" max="100">
             <button class="qty-btn plus">+</button>
         </div>
         <span class="order-sum"></span>
@@ -57,7 +57,7 @@ function createOrderRow(product, quantity) {
 
     row.querySelector('.order-name').textContent = product.name
     row.querySelector('.order-price').textContent = product.price + ' ₽'
-    row.querySelector('.qty-value').textContent = quantity
+    row.querySelector('.qty-value').value = quantity
     row.querySelector('.order-sum').textContent = product.price * quantity + ' ₽'
     row.querySelector('.quantity-control').dataset.id = product.id
 
@@ -102,6 +102,19 @@ function initQuantityButtons() {
         }
 
         setQuantity(productId, quantity)
+        renderOrder()
+    })
+    
+    list.addEventListener('change', (event) => {
+        const input = event.target.closest('.qty-value')
+        if (!input) {
+            return
+        }
+
+        const control = input.closest('.quantity-control')
+        const productId = Number(control.dataset.id)
+
+        setQuantity(productId, Math.floor(Number(input.value)))
         renderOrder()
     })
 }

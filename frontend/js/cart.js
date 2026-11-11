@@ -1,5 +1,7 @@
 const CART_KEY = 'user_cart'
 
+const MAX_QUANTITY = 100
+
 export function getCart() {
     try {
         const saved = localStorage.getItem(CART_KEY)
@@ -18,6 +20,10 @@ export function getQuantity(productId) {
 }
 
 export function setQuantity(productId, quantity) {
+    if (quantity > MAX_QUANTITY) {
+        quantity = MAX_QUANTITY
+    }
+
     const cart = getCart()
 
     if (quantity <= 0) {

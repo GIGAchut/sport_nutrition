@@ -1,0 +1,36 @@
+.admin-status {
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--chrome-mid);
+}
+
+.product-card.is-hidden .admin-status {
+    color: #ff6b6b;
+}
+
+.product-card.is-hidden .product-image,
+.product-card.is-hidden .product-name,
+.product-card.is-hidden .product-description {
+    opacity: 0.4;
+}
+
+.admin-button {
+    padding: 8px 16px;
+    background: transparent;
+    color: var(--chrome-light);
+    border: 1px solid var(--chrome-dark);
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.admin-button:disabled {
+    color: #333;
+    cursor: not-allowed;
+}
+
+.admin-error {
+    margin-top: 20px;
+    color: #ff6b6b;
+}

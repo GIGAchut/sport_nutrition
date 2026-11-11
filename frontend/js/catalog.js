@@ -14,7 +14,7 @@ function showQuantity(control, quantity) {
     const value = control.querySelector('.qty-value')
     const minusButton = control.querySelector('.minus')
 
-    value.textContent = quantity
+    value.value = quantity
     minusButton.disabled = quantity === 0
     if (quantity === 0) {
         value.classList.remove('active')
@@ -36,7 +36,7 @@ function createProductCard(product) {
             <span class="product-price"></span>
             <div class="quantity-control">
                 <button class="qty-btn minus">−</button>
-                <span class="qty-value"></span>
+                <input class="qty-value" type="number" min="0" max="100">
                 <button class="qty-btn plus">+</button>
             </div>
         </div>
@@ -101,6 +101,20 @@ export function initCartLogic() {
             quantity = quantity - 1
         }
         setQuantity(productId, quantity)
+        showQuantity(control, getQuantity(productId))
+        updateHeaderCartCount()
+    })
+
+    grid.addEventListener('change', (event) => {
+        const input = event.target.closest('.qty-value')
+        if (!input) {
+            return
+        }
+
+        const control = input.closest('.quantity-control')
+        const productId = Number(control.dataset.id)
+
+        setQuantity(productId, Math.floor(Number(input.value)))
         showQuantity(control, getQuantity(productId))
         updateHeaderCartCount()
     })

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKSENOV | Админ-панель</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components/catalog.css">
+    <link rel="stylesheet" href="/css/components/admin.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">AKSENOV ADMIN</div>
+        <nav class="nav">
+            <a href="/admin/" class="nav-link">Каталог</a>
+            <a href="/index.html" class="nav-link">На сайт</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h2 class="section-title">КАТАЛОГ ТОВАРОВ</h2>
+
+        <div id="admin-products" class="product-grid"></div>
+
+        <p id="admin-message" class="admin-error"></p>
+    </main>
+
+    <footer class="footer">
+        <p>2026 AKSENOV. Все права защищены.</p>
+    </footer>
+
+    <script type="module" src="/js/admin.js"></script>
+</body>
+</html>
